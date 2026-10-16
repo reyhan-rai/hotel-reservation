@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aurelia Boutique Hotel Room Reservation</title>
+<meta name="description" content="Book a room at Aurelia search availability, reserve instantly, manage your bookings.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="images/logo.svg">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- ============ HEADER ============ -->
+<header class="site-header" id="siteHeader">
+  <div class="header-inner">
+    <a href="#home" class="logo" aria-label="Aurelia Boutique Hotel - home">
+      <svg class="logo-mark" viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="24" cy="24" r="22" stroke="#C9A15A" stroke-width="1.6"/>
+        <path d="M13 36V23a11 11 0 0 1 22 0v13" stroke="#C9A15A" stroke-width="2"/>
+        <path d="M18 36V24a6 6 0 0 1 12 0v12" stroke="#E7CD94" stroke-width="1.5"/>
+        <path d="M24 18v18" stroke="#E7CD94" stroke-width="1.2"/>
+        <circle cx="24" cy="12.5" r="1.9" fill="#C9A15A" stroke="none"/>
+        <path d="M10 36h28" stroke="#C9A15A" stroke-width="2"/>
+      </svg>
+      <span class="logo-text">Aurelia<small>Boutique Hotel</small></span>
+    </a>
+
+    <nav class="main-nav" id="mainNav">
+      <a href="#home" data-nav="home">Home</a>
+      <a href="#rooms" data-nav="rooms">Rooms</a>
+      <a href="#book" data-nav="book">Book Now</a>
+      <a href="#bookings" data-nav="bookings">My Bookings</a>
+      <a href="#contact" data-nav="contact">Contact</a>
+    </nav>
+
+    <a href="#book" class="btn btn-gold btn-small header-cta">Reserve</a>
+
+    <div class="account-area" id="accountArea"><!-- rendered by js/app.js --></div>
+
+    <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="hero" id="home" data-view="home">
+  <div class="hero-blob blob-a" aria-hidden="true"></div>
+  <div class="hero-blob blob-b" aria-hidden="true"></div>
+
+  <div class="hero-inner">
+    <p class="hero-kicker reveal-item" style="--d:0">A quiet corner of the city</p>
+    <h1 class="hero-title">
+      <span class="reveal-item" style="--d:1">Rest,</span>
+      <span class="reveal-item hero-italic" style="--d:2">redefined.</span>
+    </h1>
+    <p class="hero-sub reveal-item" style="--d:3">
+      Twenty-four boutique rooms, a courtyard garden and no booking fees
+      ever. Reserve directly and we'll have your room ready.
+    </p>
+    <div class="hero-actions reveal-item" style="--d:4">
+      <a href="#rooms" class="btn btn-gold">Browse rooms</a>
+      <a href="#search-widget" class="btn btn-ghost">Check availability</a>
+    </div>
+  </div>
+
+  <!-- Floating search / booking widget -->
+  <div class="search-widget" id="search-widget">
+    <form id="searchForm" class="search-form">
+      <div class="field">
+        <label for="s-checkin">Check-in</label>
+        <input type="date" id="s-checkin" name="checkin" autocomplete="off" required>
+      </div>
+      <div class="field">
+        <label for="s-checkout">Check-out</label>
+        <input type="date" id="s-checkout" name="checkout" autocomplete="off" required>
+      </div>
+      <div class="field">
+        <label for="s-guests">Guests</label>
+        <select id="s-guests" name="guests" autocomplete="off">
+          <option value="1">1 guest</option>
+          <option value="2" selected>2 guests</option>
+          <option value="3">3 guests</option>
+          <option value="4">4 guests</option>
+        </select>
+      </div>
+      <button type="submit" class="btn btn-forest search-submit">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        Search rooms
+      </button>
+    </form>
+  </div>
+</section>
+
+<!-- ============ AMENITIES STRIP ============ -->
+<section class="amenities" aria-label="Hotel amenities" data-view="home">
+  <div class="amenities-inner">
+    <div class="amenity" data-amenity="wifi" role="button" tabindex="0" aria-haspopup="dialog">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg>
+      <p>Free WiFi throughout</p>
+    </div>
+    <div class="amenity" data-amenity="breakfast" role="button" tabindex="0" aria-haspopup="dialog">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4Z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
+      <p>Breakfast included</p>
+    </div>
+    <div class="amenity" data-amenity="spa" role="button" tabindex="0" aria-haspopup="dialog">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c4.97 0 9-3.58 9-8 0-4.42-9-12-9-12s-9 7.58-9 12c0 4.42 4.03 8 9 8Z"/></svg>
+      <p>Garden courtyard spa</p>
+    </div>
+    <div class="amenity" data-amenity="desk" role="button" tabindex="0" aria-haspopup="dialog">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      <p>24/7 front desk</p>
+    </div>
+    <div class="amenity" data-amenity="cancel" role="button" tabindex="0" aria-haspopup="dialog">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+      <p>Free cancellation</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ROOMS ============ -->
+<section class="rooms" id="rooms" data-view="home rooms">
+  <div class="section-inner">
+    <div class="section-head">
+      <h2>Rooms &amp; suites</h2>
+      <p>Aurelia has 20 rooms in total across four room types. Prices shown are per night — availability updates live as dates are booked.</p>
+    </div>
+    <div class="rooms-grid" id="roomsGrid"><!-- rendered by js/app.js --></div>
+  </div>
+</section>
+
+<!-- ============ ROOM DETAILS (opens when a room is clicked) ============ -->
+<section class="room-detail" id="roomDetail" data-view="room" hidden>
+  <div class="section-inner" id="roomDetailBody"><!-- rendered by js/app.js --></div>
+</section>
+
+<!-- ============ BOOK NOW ============ -->
+<section class="book" id="book" data-view="home book">
+  <div class="section-inner book-inner">
+    <div class="book-copy">
+      <h2>Reserve your stay</h2>
+      <p>Fill in your details below. Your booking is confirmed instantly and
+      you can view, change or cancel it any time in <a href="#bookings">My Bookings</a>.</p>
+      <ul class="book-points">
+        <li>No booking fees or hidden charges</li>
+        <li>Free cancellation up to 48 hours before arrival</li>
+        <li>Instant confirmation, no waiting</li>
+      </ul>
+    </div>
+
+    <div class="book-form-area">
+    <div class="card auth-gate" id="bookGate" hidden>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      <h3>Sign in to book a room</h3>
+      <p>Create a free account or sign in so we can keep this reservation just for you.</p>
+      <div class="gate-actions">
+        <button type="button" class="btn btn-gold" id="gateSignIn">Sign in</button>
+        <button type="button" class="btn btn-outline" id="gateCreate">Create account</button>
+      </div>
+    </div>
+
+    <form id="bookingForm" class="card booking-form" novalidate hidden>
+      <div class="form-row">
+        <div class="field">
+          <label for="b-name">Full name</label>
+          <input type="text" id="b-name" name="name" placeholder="Jordan Blake" autocomplete="name" required>
+        </div>
+        <div class="field">
+          <label for="b-room">Room type</label>
+          <select id="b-room" name="room" autocomplete="off" required></select>
+        </div>
+      </div>
+
+      <p class="contact-note" id="bookContact"><!-- your registered email and phone, filled by js/app.js --></p>
+
+      <div class="form-row">
+        <div class="field">
+          <label for="b-checkin">Check-in</label>
+          <input type="date" id="b-checkin" name="checkin" autocomplete="off" required>
+        </div>
+        <div class="field">
+          <label for="b-checkout">Check-out</label>
+          <input type="date" id="b-checkout" name="checkout" autocomplete="off" required>
+        </div>
+        <div class="field field-narrow">
+          <label for="b-guests">Guests</label>
+          <input type="number" id="b-guests" name="guests" min="1" max="6" value="2" autocomplete="off" required>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="b-requests">Special requests <span class="optional">(optional)</span></label>
+        <textarea id="b-requests" name="requests" rows="3" placeholder="Late check-in, high floor, quiet room…" autocomplete="off"></textarea>
+      </div>
+
+      <div class="booking-summary" id="bookingSummary" hidden>
+        <span id="summaryNights">0 nights</span>
+        <span id="summaryAvail" class="summary-avail">—</span>
+        <span class="summary-total">Total: <strong id="summaryTotal">£0</strong> <em class="summary-base" id="summaryBase"></em></span>
+      </div>
+
+      <p class="form-error" id="formError" role="alert" hidden></p>
+
+      <button type="submit" class="btn btn-gold btn-wide">Confirm reservation</button>
+    </form>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MY BOOKINGS ============ -->
+<section class="bookings" id="bookings" data-view="home bookings">
+  <div class="section-inner">
+    <div class="section-head">
+      <h2>My bookings</h2>
+      <p>Everything you've reserved. You can edit the dates or cancel any booking here.</p>
+    </div>
+
+    <div class="card auth-gate" id="bookingsGate" hidden>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      <h3>Sign in to view your bookings</h3>
+      <p>Your bookings are kept on your own account, so sign in to see, edit or cancel them.</p>
+      <div class="gate-actions">
+        <button type="button" class="btn btn-gold" id="bookingsGateSignIn">Sign in</button>
+        <button type="button" class="btn btn-outline" id="bookingsGateCreate">Create account</button>
+      </div>
+    </div>
+
+    <div class="table-wrap card" id="bookingsCard">
+      <table class="bookings-table" id="bookingsTable">
+        <thead>
+          <tr>
+            <th>Guest</th>
+            <th>Room</th>
+            <th>Check-in</th>
+            <th>Check-out</th>
+            <th>Guests</th>
+            <th>Total</th>
+            <th>Status</th>
+            <th class="col-actions">Actions</th>
+          </tr>
+        </thead>
+        <tbody id="bookingsBody"><!-- rendered by js/app.js --></tbody>
+      </table>
+      <div class="empty-state" id="emptyState" hidden>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 3v4M16 3v4M3 11h18"/></svg>
+        <p>No bookings yet.</p>
+        <a href="#book" class="btn btn-forest btn-small">Book your first stay</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTACT / FOOTER ============ -->
+<footer class="site-footer" id="contact">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <p class="logo logo-light">
+      <svg class="logo-mark" viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="24" cy="24" r="22" stroke="#C9A15A" stroke-width="1.6"/>
+        <path d="M13 36V23a11 11 0 0 1 22 0v13" stroke="#C9A15A" stroke-width="2"/>
+        <path d="M18 36V24a6 6 0 0 1 12 0v12" stroke="#E7CD94" stroke-width="1.5"/>
+        <path d="M24 18v18" stroke="#E7CD94" stroke-width="1.2"/>
+        <circle cx="24" cy="12.5" r="1.9" fill="#C9A15A" stroke="none"/>
+        <path d="M10 36h28" stroke="#C9A15A" stroke-width="2"/>
+      </svg>
+      <span class="logo-text">Aurelia<small>Boutique Hotel</small></span>
+      </p>
+      <p>RCL HA9 7EX<br>Open 24 hours, every day</p>
+    </div>
+    <div class="footer-col">
+      <h3>Explore</h3>
+      <a href="#rooms">Rooms &amp; suites</a>
+      <a href="#book">Book now</a>
+      <a href="#bookings">My bookings</a>
+    </div>
+    <div class="footer-col">
+      <h3>Contact</h3>
+      <a href="mailto:stay@aurelia-hotel.example">stay@aurelia-hotel.example</a>
+      <a href="tel:+442079460000">+44 20 7946 0000</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© <span id="year"></span> Aurelia Hotel. Built as a coursework demo — not a real hotel.</p>
+  </div>
+</footer>
+
+<!-- ============ EDIT BOOKING MODAL ============ -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <button class="modal-close" id="modalClose" aria-label="Close dialog">&times;</button>
+    <h3 id="modalTitle">Edit booking</h3>
+    <form id="editForm">
+      <input type="hidden" id="e-id" autocomplete="off">
+      <div class="form-row">
+        <div class="field">
+          <label for="e-name">Full name</label>
+          <input type="text" id="e-name" autocomplete="name" required>
+        </div>
+        <div class="field">
+          <label for="e-room">Room type</label>
+          <select id="e-room" autocomplete="off" required></select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="field">
+          <label for="e-checkin">Check-in</label>
+          <input type="date" id="e-checkin" autocomplete="off" required>
+        </div>
+        <div class="field">
+          <label for="e-checkout">Check-out</label>
+          <input type="date" id="e-checkout" autocomplete="off" required>
+        </div>
+        <div class="field field-narrow">
+          <label for="e-guests">Guests</label>
+          <input type="number" id="e-guests" min="1" max="6" autocomplete="off" required>
+        </div>
+      </div>
+      <p class="form-error" id="editError" role="alert" hidden></p>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-ghost" id="cancelEdit">Cancel</button>
+        <button type="submit" class="btn btn-gold">Save changes</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ============ DELETE CONFIRM MODAL ============ -->
+<div class="modal-overlay" id="confirmOverlay">
+  <div class="modal modal-small" role="dialog" aria-modal="true" aria-labelledby="confirmTitle">
+    <h3 id="confirmTitle">Cancel this booking?</h3>
+    <p id="confirmBody">This can't be undone. Your room will be released.</p>
+    <div class="modal-actions">
+      <button type="button" class="btn btn-ghost" id="confirmNo">Keep booking</button>
+      <button type="button" class="btn btn-danger" id="confirmYes">Cancel booking</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ ACCOUNT MODAL (Sign in / Create account) ============ -->
+<div class="modal-overlay" id="accountOverlay">
+  <div class="modal" role="dialog" aria-modal="true" aria-label="Sign in or create an account">
+    <button class="modal-close" id="accountClose" aria-label="Close dialog">&times;</button>
+
+    <form id="signInForm" class="auth-form">
+      <h3>Sign in</h3>
+      <p class="auth-lead">Enter your email and password.</p>
+      <div class="field">
+        <label for="si-email">Email</label>
+        <input type="email" id="si-email" placeholder="you@gmail.com or you@aurelie.com" autocomplete="email" required>
+      </div>
+      <div class="field">
+        <label for="si-password">Password</label>
+        <input type="password" id="si-password" autocomplete="current-password" required>
+      </div>
+      <p class="form-error" id="signInError" role="alert" hidden></p>
+      <button type="submit" class="btn btn-gold btn-wide">Sign in</button>
+      <p class="auth-switch">New to Aurelia? <button type="button" class="link-btn" id="goToCreate">Create a new account</button></p>
+    </form>
+
+    <form id="createForm" class="auth-form" hidden>
+      <h3>Create a new account</h3>
+      <p class="auth-lead">It only takes a minute.</p>
+      <div class="field">
+        <label for="cr-name">Full name</label>
+        <input type="text" id="cr-name" autocomplete="name" required>
+      </div>
+      <div class="field">
+        <label for="cr-email">Email</label>
+        <input type="email" id="cr-email" placeholder="you@gmail.com" autocomplete="email" required>
+        <p class="field-hint" id="crEmailPreview">Use any email (Gmail, Yahoo, Outlook…). It becomes your <strong>@aurelie.com</strong> address automatically.</p>
+      </div>
+      <div class="field">
+        <label for="cr-phone">Phone number</label>
+        <div class="phone-group">
+          <select id="cr-country" class="phone-code" autocomplete="tel-country-code" aria-label="Country (India, Pakistan or UK)"><!-- rendered by js/app.js --></select>
+          <input type="tel" id="cr-phone" placeholder="98765 43210" autocomplete="tel-national" inputmode="tel" required>
+        </div>
+        <p class="field-hint" id="crPhoneHint"></p>
+        <p class="field-hint" id="crCurrencyHint"></p>
+      </div>
+      <div class="field">
+        <label for="cr-password">Password</label>
+        <input type="password" id="cr-password" autocomplete="new-password" minlength="6" required>
+      </div>
+      <div class="field">
+        <label for="cr-password2">Confirm password</label>
+        <input type="password" id="cr-password2" autocomplete="new-password" minlength="6" required>
+      </div>
+      <p class="form-error" id="createError" role="alert" hidden></p>
+      <button type="submit" class="btn btn-gold btn-wide">Create account</button>
+      <p class="auth-switch">Already have an account? <button type="button" class="link-btn" id="goToSignIn">Sign in</button></p>
+    </form>
+
+    <p class="auth-note">Coursework demo — accounts are stored only in this browser, not on a real server.</p>
+  </div>
+</div>
+
+<!-- ============ AMENITY DETAILS ============ -->
+<div class="modal-overlay" id="amenityOverlay">
+  <div class="modal modal-amenity" role="dialog" aria-modal="true" aria-labelledby="amenityTitle">
+    <button class="modal-close" id="amenityClose" aria-label="Close dialog">&times;</button>
+    <div class="amenity-icon" id="amenityIcon"></div>
+    <h3 id="amenityTitle"></h3>
+    <p class="amenity-lead" id="amenityLead"></p>
+    <ul class="amenity-list" id="amenityList"></ul>
+    <p class="amenity-note" id="amenityNote"></p>
+  </div>
+</div>
+
+<!-- ============ TOAST ============ -->
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="js/app.js"></script>
+</body>
+</html>

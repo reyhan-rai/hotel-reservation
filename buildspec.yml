@@ -1,0 +1,51 @@
+version: 0.2
+
+# Triggered by AWS CodeCommit (via a webhook/EventBridge rule on the repo,
+# or Jenkins calling `aws codebuild start-build`). Runs the automated test
+# suite first — if `npm test` fails, the build stops here and nothing is
+# ever built or deployed.
+
+env:
+  variables:
+    IMAGE_REPO_NAME: "aurelia-hotel"
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 20
+    commands:
+      - echo "Installing dependencies..."
+      - npm ci
+
+  pre_build:
+    commands:
+      - echo "Running automated test suite (npm test)"
+      - npm test
+      - echo "Logging in to Amazon ECR"
+      - aws ecr get-login-password --region "$AWS_DEFAULT_REGION" \
+          | docker login --username AWS --password-stdin "$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com"
+      - IMAGE_TAG="${CODEBUILD_RESOLVED_SOURCE_VERSION:-latest}"
+
+  build:
+    commands:
+      - echo "Building Docker image"
+      - docker build -t "$IMAGE_REPO_NAME:$IMAGE_TAG" .
+      - docker tag "$IMAGE_REPO_NAME:$IMAGE_TAG" "$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG"
+      - docker tag "$IMAGE_REPO_NAME:$IMAGE_TAG" "$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:latest"
+
+  post_build:
+    commands:
+      - echo "Pushing image to ECR"
+      - docker push "$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG"
+      - docker push "$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:latest"
+      - echo "Writing the image URI into Dockerrun.aws.json for Elastic Beanstalk"
+      - sed -i "s#<IMAGE_URI>#$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG#g" Dockerrun.aws.json
+
+# Everything Elastic Beanstalk needs to run this image ends up zipped as
+# the build artifact. Jenkins (or CodePipeline) picks this up and hands
+# it to `aws elasticbeanstalk create-application-version`.
+artifacts:
+  files:
+    - Dockerrun.aws.json
+    - .ebextensions/**/*
+  discard-paths: no
